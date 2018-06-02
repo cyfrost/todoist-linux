@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <script type="text/javascript">
+         window.jQuery = window.$ = require('../js/lib/jquery.min.js');
+         window.Hammer = require('../js/lib/hammer.min.js');
+         window.app = require('electron').remote;
+      </script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+      <link rel="stylesheet" href="../css/stylesheet_common.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+      <script src="../js/views/about.js"></script>
+      <title>About</title>
+   </head>
+   <body>
+      <br>
+      <img src="../icons/icon_tray.png" alt="Todoist" style="width:90px;height:90px;" align="center">
+      <img src="../icons/mascot.png" alt="linux" style="width:90px;height:95px;" align="center">
+      <main class="main-container">
+         <header>
+            <h5 class="teal-text text-lighten-0">About Todoist for Linux</h5>
+         </header>
+         <div>
+            <p>Todoist is a productivity app used by millions around the world. This is an open-source application that wraps the official <a href='https://en.todoist.com/app?lang=en'>Todoist Web App</a> using the popular and open-source <a href='https://electronjs.org'>Electron</a> library.</p>
+            <p>This is <b>NOT</b> an official product. This project does not attempt to reverse engineer the Todoist Web Application (or API) or attempt to reimplement any part of the Todoist web app. Any interaction between the user and Todoist Web app is handled by the Todoist Web app itself; this is just a native wrapper for Todoist Web, like a browser, built for Linux only. </p>
+            <p>Author: Cyrus Frost (<a href='https://github.com/cyfrost' target="_blank">https://github.com/cyfrost</a>)<br>GitHub repository: <a href='https://github.com/cyfrost/todoist-linux' target="_blank">https://github.com/cyfrost/todoist-linux</a><br>
+               Version updates: <a href="https://github.com/cyfrost/todoist-linux/releases" target="_blank">https://github.com/cyfrost/todoist-linux/releases</a>
+            </p>
+            <br><b><u>Additional Information:</u></b><br>
+            App version: v<span id="appversion"></span><br>
+            Electron runtime: v<span id="electronversion"></span><br>
+            NodeJS runtime: v<span id="nodeversion"></span><br>
+            Chromium runtime: v<span id="chromeversion"></span><br>
+         </div>
+      </main>
+   </body>
+</html>

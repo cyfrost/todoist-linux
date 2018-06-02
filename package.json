@@ -1,0 +1,21 @@
+{
+    "name": "Todoist",
+    "main": "src/main.js",
+    "author": "Cyrus Frost <cyrus.frost@hotmail.com>",
+    "build": {
+        "appId": "com.cyfrost.todoist",
+        "directories": {
+            "app": "src"
+        },
+        "linux": {
+            "target": [
+                "deb",
+                "rpm"
+            ],
+            "category": "Internet;Office;Utility;Productivity;"
+        }
+    },
+    "devDependencies": {
+        "electron-builder": "^20.15.1"
+    }
+}
