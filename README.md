@@ -32,16 +32,16 @@ This project currently provides `DEB` and `RPM` packages in both `x86` and `x64`
 
 For `.DEB` users:
 
-            `$ sudo apt install <file_name.deb>` (ex: `sudo apt install Todoist_1.0.0_amd64.deb`)
+   `$ sudo apt install <file_name.deb>` (ex: `sudo apt install Todoist_1.0.0_amd64.deb`)
 
 For `.RPM` users:
 
-             `$ sudo yum install <file_name.rpm>` (ex: `sudo dnf install Todoist_1.0.0.x86_x64.rpm`)
+   `$ sudo yum install <file_name.rpm>` (ex: `sudo dnf install Todoist_1.0.0.x86_x64.rpm`)
    
 
 ## Usage Instructions
 
-Todoist is accessible from Installed Applications list, you can change settings by either `right-clicking on the tray icon > Options` or `hit Alt key and go to File > Options`. The configuration is saved in `~/.config/Todoist/settings.json`.
+Todoist is accessible from Installed Applications list, you can change settings by either `right-clicking on the tray icon > Options` or in the main window `hit Alt key and go to File > Options`. The configuration is saved in `~/.config/Todoist/settings.json`.
    
    
 ## Global Keyboard Shortcuts
