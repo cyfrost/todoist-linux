@@ -66,7 +66,9 @@ The configuration/App data is stored in `~/.config/Todoist`.
 
 ## Build Instructions
 
-Pretty simple:
+Before anything else, you'll need `npm` and `make` packages to be able to build this project. See [Installing Node.js via Package Manager](https://nodejs.org/en/download/package-manager). Although `make` is probably installed, it is also bundled with `build-essential` pkg.
+
+Pretty simple to build the project:
 
 * run `$ npm install` in the project root directory to install project dependencies.
 
@@ -78,8 +80,8 @@ Pretty simple:
 
 ## Contributing
 
-Feel free to poke around this code base and see if you can improve the app, this is probably the best part of Open-Source dev. If you need help, reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
+Feel free to poke around the code base and see if you can improve the app, which is probably the best part of FOSS dev. If you need help, feel free to reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
 
 ## License
 
-This project is made available under the MIT License, obtain a full copy of it [here](https://opensource.org/licenses/MIT).
+This project is made available under the MIT License, you can obtain a full copy of it [here](https://opensource.org/licenses/MIT).
