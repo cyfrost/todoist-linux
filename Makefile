@@ -1,16 +1,16 @@
 DIST_DIR=dist
 VERSION=1.0.0
 
-.PHONY: up
-up:
+.PHONY: run
+run:
 	cd src && npm start
 
 .PHONY: packages
-build:
+packages:
 	./node_modules/.bin/electron-builder --linux --ia32 --x64
 
 .PHONY: archive
-archive-unpacked:
+archive:
 	zip -r $(DIST_DIR)/todoist-linux.zip $(DIST_DIR)/linux-unpacked/*
 
 .PHONY: set-version

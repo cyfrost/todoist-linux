@@ -5,7 +5,7 @@
 [![license](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/cyfrost/easyrun/blob/master/LICENSE)
 [![HitCount](http://hits.dwyl.com/cyfrost/todoist-linux.svg)](http://hits.dwyl.com/cyfrost/todoist-linux)
 
-[Todoist](https://todoist.com) is a productivity app used by millions around the world. It's kinda sad they don't (yet) make Todoist for Linux. This is an open-source project to build a simple wrapper application around the [Official Todoist web app](https://todoist.com/app) using the [Electron JS](https://electronjs.org) framework.
+[Todoist](https://todoist.com) is a productivity app used by millions around the world. Unfortunately, there's no official app for Todoist for Linux. This project project creates a simple wrapper application around the [Official Todoist web app](https://todoist.com/app) using the [Electron JS](https://electronjs.org) framework with additional features.
 
 ## Features
 
@@ -32,11 +32,11 @@ This project currently provides `DEB` and `RPM` packages in both `x86` and `x64`
 
 For `.DEB` users:
 
-   `$ sudo apt install <file_name.deb>` (ex: `sudo apt install Todoist_1.0.0_amd64.deb`)
+            `$ sudo apt install <file_name.deb>` (ex: `sudo apt install Todoist_1.0.0_amd64.deb`)
 
 For `.RPM` users:
 
-   `$ sudo yum install <file_name.rpm>` (ex: `sudo dnf install Todoist_1.0.0.x86_x64.rpm`)
+             `$ sudo yum install <file_name.rpm>` (ex: `sudo dnf install Todoist_1.0.0.x86_x64.rpm`)
    
 
 ## Usage Instructions
@@ -53,22 +53,22 @@ These bindings may not always work, for example, in cases where current bindings
 * ESC - hides the window if isFocused() promises true.
 * All other Todoist's shortcuts are accessible inside the window.
 
-# Build Instructions
+## Build Instructions
 
 Pretty simple:
 
-* 1. run `$ npm install` in the project root directory to install project dependencies.
+* run `$ npm install` in the project root directory to install project dependencies.
 
-* 2. run `$ npm install` in the `src` directory to install app dependencies/modules.
+* run `$ npm install` in the `src` directory to install app dependencies/modules.
 
-* 3. run `$ npm run start` in the `src` directory to run the app.
+* run `$ npm run start` in the `src` directory to run the app (or `$ make run` in the project root).
 
 * [Optional] If you're looking for a way to build `DEB` and `RPM` packages yourself, run `$ make packages` in the project root directory. This will create (32bit + 64bit) DEB and RPM packages in the `dist` directory.
 
-# Contributing
+## Contributing
 
 Feel free to poke around this code base and see if you can improve the app, this is probably the best part of Open-Source dev. If you need help, reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
 
-# License
+## License
 
 This project is made available under the MIT License, obtain a full copy of it [here](https://opensource.org/licenses/MIT).
