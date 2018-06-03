@@ -16,10 +16,9 @@ The following features are available:
   * Nifty toggleable Tray icon with useful actions (TrayContextMenu, Single click to activate, etc).
   * Always Up-to-date!
 
-![img](https://i.imgur.com/MyeKIuO.png) ![img](https://i.imgur.com/piZhFpA.png)
+Note: I use [this](https://www.gnome-look.org/p/1013714/) macOS theme on my GNOME desktop, hence the screencap's titlebars ;)
 
-![img](https://i.imgur.com/nIWqIa8.png)          
-
+![img](https://i.imgur.com/yfNZ50m.png)
 
 ## Download
 
