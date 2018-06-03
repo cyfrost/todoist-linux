@@ -9,8 +9,6 @@
 
 ## Features
 
-The following features are available:
-
   * Auto start Todoist on startup (Minmize on startup available).
   * Nifty keyboard shortcuts to globally access Todoist actions such as quickly adding tasks to Todoist.
   * Nifty toggleable Tray icon with useful actions (TrayContextMenu, Single click to activate, etc).
