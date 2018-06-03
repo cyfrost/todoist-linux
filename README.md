@@ -53,6 +53,17 @@ These bindings may not always work, for example, in cases where current bindings
 * ESC - hides the window if isFocused() promises true.
 * All other Todoist's shortcuts are accessible inside the window.
 
+## Removal Instructions
+
+If you'd like to remove Todoist for Linux from your machine:
+
+* run `$ sudo apt remove Todoist` if you installed the .deb package
+
+* run `$ sudo yum remove Todoist` if you installed the .rpm package
+
+The configuration/App data is stored in `~/.config/Todoist`.
+
+
 ## Build Instructions
 
 Pretty simple:
