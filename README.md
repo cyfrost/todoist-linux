@@ -79,6 +79,8 @@ Pretty simple to build the project:
 
 Feel free to poke around the code base and see if you can improve the app, which is probably the best part of FOSS dev. If you need help, feel free to reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
 
+I originally found [this] by []() in attempt to use Todoist for Linux, liked it very well, got inspired: forked it and added new features under the current project.
+
 ## License
 
 This project is made available under the MIT License, you can obtain a full copy of it [here](https://opensource.org/licenses/MIT).
