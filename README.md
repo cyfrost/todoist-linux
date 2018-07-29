@@ -1,6 +1,5 @@
 # Todoist for Linux
 
-[![build_status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/cyfrost/todoist-linux/releases/latest)
 [![GitHub release](https://img.shields.io/badge/current%20release-v1.0-blue.svg)](https://github.com/cyfrost/todoist-linux/releases/latest)
 [![license](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/cyfrost/easyrun/blob/master/LICENSE)
 [![HitCount](http://hits.dwyl.com/cyfrost/todoist-linux.svg)](http://hits.dwyl.com/cyfrost/todoist-linux)
@@ -77,7 +76,7 @@ Pretty simple to build the project:
 
 ## Contributing
 
-Feel free to poke around the code base and see if you can improve the app, which is probably the best part of FOSS dev. If you need help, feel free to reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
+Feel free to poke around the code base and see if you can improve the app, which is probably the best part of FOSS devel. If you need help, feel free to reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
 
 I originally found [this](https://github.com/KryDos/todoist-linux) by [Ruslan Bekenev](https://github.com/KryDos) in attempt to use Todoist for Linux, liked it very well, got inspired: forked it and added new features under the current project.
 
