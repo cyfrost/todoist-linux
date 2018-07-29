@@ -4,14 +4,18 @@
 [![license](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/cyfrost/easyrun/blob/master/LICENSE)
 [![HitCount](http://hits.dwyl.com/cyfrost/todoist-linux.svg)](http://hits.dwyl.com/cyfrost/todoist-linux)
 
-[Todoist](https://todoist.com) is a productivity app used by millions around the world. Unfortunately, there's no official app for Todoist for Linux. This project project creates a simple wrapper application around the [Official Todoist web app](https://todoist.com/app) using the [Electron JS](https://electronjs.org) framework with additional features.
+[Todoist](https://todoist.com) is a productivity app (a To-Do list manager) used by millions of people around the world. Unfortunately, there's [no official Todoist Linux app](https://en.todoist.com/downloads) yet for reasons unknown. This project develops a Todoist Linux client by wrapping the [Todoist Web app](https://todoist.com/app) in a friendly interface along with a bunch of other useful features (Startup settings, and Global Keyboard shortcuts).
+
+## Motivation
+
+When starting out, my exasperation over the lack of a native Todoist Linux client was midly amusing. After a short hunt, I found [this](https://github.com/KryDos/todoist-linux) project, created by [Ruslan Bekenev](https://github.com/KryDos), was already in the works. I liked it very much but it lacked some features I deemed essential to my workflow, This project builds on top of it to address my needs.
 
 ## Features
 
   * Auto start Todoist on startup (Minmize on startup available).
-  * Nifty keyboard shortcuts to globally access Todoist actions such as quickly adding tasks to Todoist.
-  * Nifty toggleable Tray icon with useful actions (TrayContextMenu, Single click to activate, etc).
-  * Always Up-to-date!
+  * Nifty keyboard shortcuts to globally access Todoist actions (such as quickly adding tasks to Todoist).
+  * Nifty toggleable TrayIcon with useful actions (TrayContextMenu, Single click to activate, etc).
+  * Always Up-to-date! (it's wrapping the web version, remember?) 
 
 Note: I use [this](https://www.gnome-look.org/p/1013714/) macOS theme on my GNOME desktop, hence the screencap's titlebars ;)
 
@@ -23,8 +27,11 @@ This project currently provides `DEB` and `RPM` packages in both `x86` and `x64`
 
 [Go to the Releases page](https://github.com/cyfrost/todoist-linux/releases) and grab the latest compatible package for your machine.
 
+For the unininitated, if you're using Ubuntu, get the `.deb` package; or the `.rpm` package if your distro is Fedora/CentOS/RHEL/OpenSUSE.
 
 ## Installation
+
+After downloading the suitable package from the [releases](https://github.com/cyfrost/todoist-linux/releases) page, open up a new Terminal window and use the following instructions to install the downloaded package:
 
 For `.DEB` users:
 
@@ -78,7 +85,9 @@ Pretty simple to build the project:
 
 Feel free to poke around the code base and see if you can improve the app, which is probably the best part of FOSS devel. If you need help, feel free to reach out to me at [cyrus.frost@hotmail.com](mailto:cyrus.frost@hotmail.com). Good luck!
 
-I originally found [this](https://github.com/KryDos/todoist-linux) by [Ruslan Bekenev](https://github.com/KryDos) in attempt to use Todoist for Linux, liked it very well, got inspired: forked it and added new features under the current project.
+## Reporting Bugs/Issues
+
+If you find an issue while using this app, please open a new Issue in the "Issues" tab and we'll go from there. If you already know how to fix it, please create a new Pull Request, I'll be more than happy to review and merge it sooner than later.
 
 ## License
 
