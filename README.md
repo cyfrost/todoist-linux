@@ -64,22 +64,33 @@ If you'd like to remove Todoist for Linux from your machine:
 
 * run `$ sudo yum remove Todoist` if you installed the .rpm package
 
-The configuration/App data is stored in `~/.config/Todoist`.
+If you'd like to remove, the configuration/App data is stored in `~/.config/Todoist`.
 
 
 ## Build Instructions
 
-Before anything else, you'll need `npm` and `make` packages to be able to build this project. See [Installing Node.js via Package Manager](https://nodejs.org/en/download/package-manager). Although `make` is probably installed, it is also bundled with `build-essential` pkg.
+Install the following packages to get started: 
 
-Pretty simple to build the project:
+1. Visit (https://nodejs.org/en/download/package-manager/) and follow your distro-specific instructions to install (Node.js + npm).
 
-* run `$ npm install` in the project root directory to install project dependencies.
+`Tip:` make sure your installation is successful by doing `$ npm --version`.
+
+2. Install Electron.js framework with `$ npm i -D electron@latest`.
+
+3. Visit (https://yarnpkg.com/en/docs/install) and follow distro-specific instructions to install `yarn` package manager for Node.js
+
+
+### Build project:
+
+* run `$ npm install` in the project's root directory to install project dependencies.
 
 * run `$ npm install` in the `src` directory to install app dependencies/modules.
 
 * run `$ npm run start` in the `src` directory to run the app (or `$ make run` in the project root).
 
-* [Optional] If you're looking for a way to build `DEB` and `RPM` packages yourself, run `$ make packages` in the project root directory. This will create (32bit + 64bit) DEB and RPM packages in the `dist` directory.
+* [Optional] If you're looking for a way to build `.deb` or `.rpm` or other distro-specific packages yourself, run `$ make packages` in the project root directory. This will create (32bit + 64bit) DEB and RPM packages in the `dist` directory.
+
+
 
 ## Contributing
 
