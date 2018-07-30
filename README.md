@@ -69,17 +69,8 @@ If you'd like to remove, the configuration/App data is stored in `~/.config/Todo
 
 ## Build Instructions
 
-Install the following packages to get started: 
+Visit (https://nodejs.org/en/download/package-manager/) and follow your distro-specific instructions to install (Node.js + npm).
 
-1. Visit (https://nodejs.org/en/download/package-manager/) and follow your distro-specific instructions to install (Node.js + npm).
-
-`Tip:` make sure your installation is successful by doing `$ npm --version`.
-
-2. Install Electron.js framework with `$ npm i -D electron@latest`.
-
-3. Visit (https://yarnpkg.com/en/docs/install) and follow distro-specific instructions to install `yarn` package manager for Node.js
-
-4. Install `electron-builder` package via Yarn using `$ yarn add electron-builder --dev`
 
 ### Build project:
 
