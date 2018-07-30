@@ -10,7 +10,8 @@
         "linux": {
             "target": [
                 "deb",
-                "rpm"
+                "rpm",
+                "AppImage"
             ],
             "category": "Internet;Office;Utility;Productivity;"
         }
