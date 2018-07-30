@@ -79,6 +79,7 @@ Install the following packages to get started:
 
 3. Visit (https://yarnpkg.com/en/docs/install) and follow distro-specific instructions to install `yarn` package manager for Node.js
 
+4. Install `electron-builder` package via Yarn using `$ yarn add electron-builder --dev`
 
 ### Build project:
 
