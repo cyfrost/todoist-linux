@@ -49,22 +49,26 @@ Todoist is accessible from Installed Applications list, you can change settings 
    
 ## Global Keyboard Shortcuts
 
-These bindings may not always work, for example, in cases where current bindings are globally registered by another application inb4 Todoist gets a chance --you'll have to quit or unregister those bindings and run Todoist again.
+Keyboard shortcuts come in handy when you need to add a Task to Todoist but without having the window open at the moment.
 
 * Ctrl + Alt + A - global shortcut to open the "Add Quick Task" action in Todoist app. 
 * Ctrl + Alt + T - Shows or hides the Todoist window.
 * ESC - hides the window if isFocused() promises true.
 * All other Todoist's shortcuts are accessible inside the window.
 
+
+These bindings may not always work, for example, in cases where current bindings are globally registered by another application inb4 Todoist gets a chance --you'll have to quit or unregister those bindings and run Todoist again.
+
+
 ## Removal Instructions
 
-If you'd like to remove Todoist for Linux from your machine:
+If you'd like to remove `Todoist for Linux` from your machine:
 
 * run `$ sudo apt remove Todoist` if you installed the .deb package
 
 * run `$ sudo yum remove Todoist` if you installed the .rpm package
 
-If you'd like to remove, the configuration/App data is stored in `~/.config/Todoist`.
+If you'd like to remove, the configuration/data is stored in `~/.config/Todoist`.
 
 
 ## Build Instructions
@@ -74,14 +78,20 @@ Visit (https://nodejs.org/en/download/package-manager/) and follow your distro-s
 
 ### Build project:
 
-* run `$ npm install` in the project's root directory to install project dependencies.
+* run `$ make build` in the extracted project directory.
 
-* run `$ npm install` in the `src` directory to install app dependencies/modules.
+The below command will automatically:
 
-* run `$ npm run start` in the `src` directory to run the app (or `$ make run` in the project root).
+1. Download and install project dependencies
+2. Download and install app dependencies
+3. Build the app
+4. Run the app in debug mode
 
-* [Optional] If you're looking for a way to build `.deb` or `.rpm` or other distro-specific packages yourself, run `$ make packages` in the project root directory. This will create (32bit + 64bit) DEB and RPM packages in the `dist` directory.
+### Building application packages:
 
+If you're looking for a way to build `.deb` or `.rpm` or `.AppImage` or other distro-specific packages yourself:
+
+run `$ make packages` in the extracted project directory. This will create (x86 and x64) LINUX ONLY packages for targets specified in the `package.json` file. The packages can be found in the `<proj_root>/dist` directory.
 
 
 ## Contributing
