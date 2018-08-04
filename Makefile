@@ -3,11 +3,16 @@ VERSION=1.0.0
 
 .PHONY: run
 run:
-	cd src && npm start
+	cd src && npm run start
 
 .PHONY: packages
 packages:
 	./node_modules/.bin/electron-builder --linux --ia32 --x64
+
+.PHONY: build
+build:
+	npm install && cd src && npm install && npm run start
+
 
 .PHONY: archive
 archive:
