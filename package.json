@@ -2,6 +2,11 @@
     "name": "Todoist",
     "main": "src/main.js",
     "author": "Cyrus Frost <cyrus.frost@hotmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cyfrost/todoist-linux.git"
+    },
     "build": {
         "appId": "com.cyfrost.todoist",
         "directories": {
@@ -17,6 +22,6 @@
         }
     },
     "devDependencies": {
-        "electron-builder": "^20.15.1"
+        "electron-builder": "^20.26.1"
     }
 }
