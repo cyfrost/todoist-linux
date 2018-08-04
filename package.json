@@ -13,7 +13,7 @@
                 "rpm",
                 "AppImage"
             ],
-            "category": "Internet;Office;Utility;Productivity;"
+            "category": "Office;Utility;"
         }
     },
     "devDependencies": {
