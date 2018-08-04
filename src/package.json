@@ -1,6 +1,6 @@
 {
   "name": "Todoist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Todoist for linux",
   "main": "main.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "email": "cyrus.frost@hotmail.com",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^2.0.2",
+    "electron": "^2.0.6",
     "electron-packager": "^12.1.0"
   },
   "dependencies": {
