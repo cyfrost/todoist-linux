@@ -9,14 +9,16 @@ This repo is a fork of [Ruslan Bekenev's](https://github.com/KryDos/todoist-linu
 This fork has all the features that [upstream](https://github.com/KryDos/todoist-linux) has, plus:
 
   * Run at Startup + Minimize on start! (see screenshots below)
-  * Nifty keyboard shortcuts to globally access Todoist actions (such as quickly adding tasks to Todoist).
-  * Nifty toggleable TrayIcon with useful actions (TrayContextMenu, Single click to activate, etc).
+  * Nifty keyboard shortcuts to globally access Todoist actions (Quickly add tasks, hide/show window etc).
+  * Nifty toggleable system Tray icon with useful actions (Single click to activate, reset app, etc).
   * Always Up-to-date! (Electron/Node runtimes)
+  
 
 ![img](https://i.imgur.com/lgNoLb7.png)
 
 
 ![img](https://i.imgur.com/skShjnT.png)
+
 
 ## Download
 
