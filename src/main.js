@@ -20,8 +20,8 @@
 
     let currentWindowState = 'shown';
 
-
-    var shouldQuit = app.makeSingleInstance(function(commandLine, workingDirectory) {
+    app.requestSingleInstanceLock();
+    var shouldQuit = app.on('second-instance', function(commandLine, workingDirectory) {
         // Someone tried to run a second instance, we should focus our window.
         if (todoist.window) {
             todoist.window.show();
