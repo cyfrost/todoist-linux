@@ -1,45 +1,50 @@
 # Todoist for Linux
 
-[![GitHub release](https://img.shields.io/badge/current%20release-v1.0-blue.svg)](https://github.com/cyfrost/todoist-linux/releases/latest)
-[![license](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/cyfrost/easyrun/blob/master/LICENSE)
-[![HitCount](http://hits.dwyl.com/cyfrost/todoist-linux.svg)](http://hits.dwyl.com/cyfrost/todoist-linux)
+[Todoist](https://todoist.com) is a To-do app used by many people.
 
-[Todoist](https://todoist.com) is a productivity app (a To-Do list manager) used by millions of people around the world. Unfortunately, there's [no official Todoist Linux app](https://en.todoist.com/downloads) yet for reasons unknown. This project develops a Todoist Linux client by wrapping the [Todoist Web app](https://todoist.com/app) in a friendly interface along with a bunch of other useful features (Startup settings, and Global Keyboard shortcuts).
-
-## Motivation
-
-When starting out, my exasperation over the lack of a native Todoist Linux client was midly amusing. After a short hunt, I found [this](https://github.com/KryDos/todoist-linux) project, created by [Ruslan Bekenev](https://github.com/KryDos), was already in the works. I liked it very much but it lacked some features I deemed essential to my workflow, This project builds on top of it to address my needs.
+This repo is a fork of [Ruslan Bekenev's](https://github.com/KryDos/todoist-linux) project, plus, some additional niceties that suit my workflow.
 
 ## Features
 
-  * Auto start Todoist on startup (Minmize on startup available).
+This fork has all the features that [upstream](https://github.com/KryDos/todoist-linux) has, plus:
+
+  * Run at Startup + Minimize on start! (see screenshots below)
   * Nifty keyboard shortcuts to globally access Todoist actions (such as quickly adding tasks to Todoist).
   * Nifty toggleable TrayIcon with useful actions (TrayContextMenu, Single click to activate, etc).
-  * Always Up-to-date! (it's wrapping the web version, remember?) 
-
-Note: I use [this](https://www.gnome-look.org/p/1013714/) macOS theme on my GNOME desktop, hence the screencap's titlebars ;)
+  * Always Up-to-date! (Electron/Node runtimes)
 
 ![img](https://i.imgur.com/yfNZ50m.png)
 
+![img](https://i.imgur.com/lgNoLb7.png)
+
+
+![img](https://i.imgur.com/skShjnT.png)
+
 ## Download
 
-This project currently provides `DEB` and `RPM` packages in both `x86` and `x64` architectures. Most commonly-used GNU/Linux distros use either `DEB` or `RPM` packaging format (such as Debian; and its derivatives, the Red-Hat ecosystem --Fedora, CentOS, RHEL etc., and OpenSUSE too).
+This project currently provides `.DEB`, `.RPM`, and `AppImage` packages in both x86 and x64 platforms. Most commonly-used GNU/Linux distros use either `DEB` or `RPM` packaging format (such as Debian; and its derivatives, the Red-Hat ecosystem --Fedora, CentOS, RHEL etc., and OpenSUSE too). If your distro doesn't use `apt` or `dnf` you can always use the `AppImage` package since it works universally on most major distributions.
 
 [Go to the Releases page](https://github.com/cyfrost/todoist-linux/releases) and grab the latest compatible package for your machine.
 
-For the unininitated, if you're using Ubuntu, get the `.deb` package; or the `.rpm` package if your distro is Fedora/CentOS/RHEL/OpenSUSE.
+For the unininitated, if you're using Ubuntu, get the `.deb` package; or the `.rpm` package if your distro is Fedora/CentOS/RHEL/OpenSUSE, or the `AppImage` if your distro is neither.
 
 ## Installation
 
 After downloading the suitable package from the [releases](https://github.com/cyfrost/todoist-linux/releases) page, open up a new Terminal window and use the following instructions to install the downloaded package:
 
-For `.DEB` users:
+If you downloaded the `.DEB` package, then do:
 
    `$ sudo apt install <file_name.deb>` (ex: `sudo apt install Todoist_1.0.0_amd64.deb`)
 
-For `.RPM` users:
+If you downloaded the `.RPM` package then do:
 
    `$ sudo yum install <file_name.rpm>` (ex: `sudo dnf install Todoist_1.0.0.x86_x64.rpm`)
+   
+If you downloaded the `.AppImage` package then do:
+
+   `$ chmod a+x <file_name.AppImage>`
+   
+   `$ ./<file_name.AppImage>`
    
 
 ## Usage Instructions
@@ -56,22 +61,23 @@ Keyboard shortcuts come in handy when you need to add a Task to Todoist but with
 * ESC - hides the window if isFocused() promises true.
 * All other Todoist's shortcuts are accessible inside the window.
 
+These bindings may not work as intended if they're already registered by another application in active use.
 
-These bindings may not always work, for example, in cases where current bindings are globally registered by another application inb4 Todoist gets a chance --you'll have to quit or unregister those bindings and run Todoist again.
 
+## Removal (Uninstall) Instructions
 
-## Removal Instructions
-
-If you'd like to remove `Todoist for Linux` from your machine:
+If you'd like to remove Todoist for Linux from your machine:
 
 * run `$ sudo apt remove Todoist` if you installed the .deb package
 
-* run `$ sudo yum remove Todoist` if you installed the .rpm package
+* run `$ sudo dnf remove Todoist` if you installed the .rpm package
 
-If you'd like to remove, the configuration/data is stored in `~/.config/Todoist`.
+* Visit [this page](https://stackoverflow.com/questions/43680226/how-can-i-uninstall-an-appimage) for removal instructions if you installed it via the .AppImage package.
+
+If you'd like to remove the config data, it is stored in `~/.config/Todoist`.
 
 
-## Build Instructions
+# Build Instructions & Contributing
 
 Visit (https://nodejs.org/en/download/package-manager/) and follow your distro-specific instructions to install (Node.js + npm).
 
@@ -102,6 +108,6 @@ Feel free to poke around the code base and see if you can improve the app, which
 
 If you find an issue while using this app, please open a new Issue in the "Issues" tab and we'll go from there. If you already know how to fix it, please create a new Pull Request, I'll be more than happy to review and merge it sooner than later.
 
-## License
+# License / Credits
 
-This project is made available under the MIT License, you can obtain a full copy of it [here](https://opensource.org/licenses/MIT).
+Since this repo is a fork of [this project](https://github.com/KryDos/todoist-linux), all licensing terms and copyrights apply inherently.
