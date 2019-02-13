@@ -17,9 +17,8 @@
     "type": "git",
     "url": "https://github.com/cyfrost/todoist-linux.git"
   },
-  "author": "Cyrus Frost <cyrus.frost@hotmail.com>",
-  "email": "cyrus.frost@hotmail.com",
-  "license": "MIT",
+  "author": "Ruslan Bekenev <furyinbox@gmail.com>",
+  "email": "furyinbox@gmail.com",
   "devDependencies": {
     "electron": "^4.0.4",
     "electron-packager": "^13.0.1"

@@ -1,14 +1,13 @@
 {
     "name": "Todoist",
     "main": "src/main.js",
-    "author": "Cyrus Frost <cyrus.frost@hotmail.com>",
-    "license": "MIT",
+    "author": "Ruslan Bekenev <furyinbox@gmail.com>",
     "repository": {
         "type": "git",
         "url": "https://github.com/cyfrost/todoist-linux.git"
     },
     "build": {
-        "appId": "com.cyfrost.todoist",
+        "appId": "com.krydos.todoist",
         "directories": {
             "app": "src"
         },
@@ -22,6 +21,6 @@
         }
     },
     "devDependencies": {
-        "electron-builder": "^20.26.1"
+        "electron-builder": "^20.38.5"
     }
 }
