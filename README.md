@@ -13,8 +13,6 @@ This fork has all the features that [upstream](https://github.com/KryDos/todoist
   * Nifty toggleable TrayIcon with useful actions (TrayContextMenu, Single click to activate, etc).
   * Always Up-to-date! (Electron/Node runtimes)
 
-![img](https://i.imgur.com/yfNZ50m.png)
-
 ![img](https://i.imgur.com/lgNoLb7.png)
 
 
