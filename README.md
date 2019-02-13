@@ -2,7 +2,7 @@
 
 [Todoist](https://todoist.com) is a To-do app used by many people.
 
-This repo is a fork of [Ruslan Bekenev's](https://github.com/KryDos/todoist-linux) project, plus, some additional niceties that suit my workflow.
+This repo is a fork of [Ruslan Bekenev's](https://github.com/KryDos/todoist-linux) project, plus, some additional niceties made to suit my workflow.
 
 ## Features
 
