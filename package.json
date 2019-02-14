@@ -2,12 +2,13 @@
     "name": "Todoist",
     "main": "src/main.js",
     "author": "Ruslan Bekenev <furyinbox@gmail.com>",
+    "maintainer": "Cyrus Frost <cyrus.frost@hotmail.com>",
     "repository": {
         "type": "git",
         "url": "https://github.com/cyfrost/todoist-linux.git"
     },
     "build": {
-        "appId": "com.krydos.todoist",
+        "appId": "com.cyfrost.todoist",
         "directories": {
             "app": "src"
         },

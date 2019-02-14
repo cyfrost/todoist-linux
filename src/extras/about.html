@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        window.jQuery = window.$ = require('./jquery.js');
+        window.Hammer = require('./hammer.js');
+        window.app = require('electron').remote;
+    </script>
+    <link rel="stylesheet" href="./materialize.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./materialize.js"></script>
+    <script src="./about.js"></script>
+    <title>About Todoist for Linux</title>
+</head>
+
+<body>
+    <br>
+    <center>
+        <img src="../icons/icon_tray.png" alt="Todoist" style="width:90px;height:90px;">
+        <img src="../icons/mascot.png" alt="Linux" style="width:90px;height:95px;">
+    </center>
+    <main class="main-container">
+        <header>
+            <h5 class="teal-text text-lighten-0">About Todoist for Linux (v<span id="appversion"></span>)</h5>
+        </header>
+        <div>
+            <p>Todoist is a To-do app used by many people. This app is an open-source implementation of the <a href='https://en.todoist.com/app?lang=en'>Todoist Web App</a> to create a Linux native package.</p>
+            <p>Disclaimer: This app is community made and not an official release.</p>
+            <p>Original Author: Ruslan Bekenev (<a href='https://github.com/krydos' target="_blank">https://github.com/krydos</a>)<br>Current Maintainer: Cyrus Frost (<a href='https://github.com/cyfrost' target="_blank">https://github.com/cyfrost</a>)<br>GitHub
+                Repository:
+                <a href='https://github.com/cyfrost/todoist-linux' target="_blank">https://github.com/cyfrost/todoist-linux</a><br>Get App Updates: <a href="https://github.com/cyfrost/todoist-linux/releases" target="_blank">https://github.com/cyfrost/todoist-linux/releases</a>
+            </p>
+            <br><b><u>Debug Info:</u></b><br> App version: v<span id="appversion"></span><br> Electron Runtime: v<span id="electronversion"></span><br> Node Runtime: v<span id="nodeversion"></span><br> Chromium Engine: v<span id="chromeversion"></span><br>
+        </div>
+    </main>
+</body>
+
+</html>
