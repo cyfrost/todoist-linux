@@ -2,26 +2,22 @@
     const windowStateKeeper = require('electron-window-state');
     const path = require('path');
     const url = require('url');
-    const AutoLaunch = require("auto-launch");
-    const fileSystem = require('fs');
+
     const shortcuts = require('./shortcuts');
+    const prefs = require('./AppPreferences');
+    
 
-    let win = {};
-    let tray = null;
+    let win = undefined;
+    let tray = undefined;
+    let aboutWindow = undefined;
     let gOauthWindow = undefined;
-    let config = {};
-    let shortcutsInstance = {};
+    let shortcutsInstance = undefined;
+   
     const mainUrl = 'https://todoist.com/app';
-
-
-
-
-
-
 
     function handlePageRedirect(e, url) {
         // there may be some popups on the same page
-        if (url == app.webContents.getURL()) {
+        if (url == win.webContents.getURL()) {
             return true;
         }
 
@@ -57,25 +53,25 @@
 
 
 
-    function createTrayIcon(win) {
+    function createTrayIcon() {
 
         tray = new Tray(path.join(__dirname, 'icons/icon_tray.png'));
 
-        win.trayContextMenu = Menu.buildFromTemplate([{
+        trayContextMenu = Menu.buildFromTemplate([{
                 label: 'Open',
-                click: bringAppToFocus()
+                click: bringAppToFocus
             },
             {
                 type: 'separator'
             },
             {
                 label: 'Options',
-                click: showOptionsWindow()
+                click: prefs.showAppSettings
             }, {
                 type: 'separator'
             }, {
                 label: 'About',
-                click: showAboutAppWindow()
+                click: AboutApp.showWindow
             },
             {
                 label: 'Quit',
@@ -90,15 +86,12 @@
 
         tray.setToolTip('Todoist');
         tray.setContextMenu(trayContextMenu);
-
     }
 
-    function bringAppToFocus(win) {
-        win.window.show();
-        win.window.focus();
+    function bringAppToFocus() {
+        win.show();
+        win.focus();
     }
-
-
 
     function createAppWindow() {
 
@@ -115,7 +108,6 @@
             width: mainWindowState.width,
             height: mainWindowState.height,
             title: 'Todoist',
-            autoHideMenuBar: config.get("autoHideMenuBar") == true,
             icon: path.join(__dirname, 'icons/icon_tray.png')
         });
 
@@ -125,11 +117,6 @@
             protocol: 'file:',
             slashes: true
         }));
-
-        createMainMenu();
-
-
-
 
         // react on close and minimize
         win.on('minimize', function(event) {
@@ -161,7 +148,7 @@
         // so it can be restored next time
         mainWindowState.manage(win);
 
-
+        createMainMenu(win);
     }
 
     function createMainMenu(win) {
@@ -172,12 +159,12 @@
                 submenu: [{
                         label: 'Options',
                         accelerator: 'Ctrl+S',
-                        click: showOptionsWindow()
+                        click: prefs.showAppSettings
 
                     },
                     {
                         label: 'Reset App Data',
-                        click: resetAppData()
+                        click: resetAppData
                     },
                     {
                         type: 'separator'
@@ -218,7 +205,7 @@
                 }, {
                     label: 'Copy Current URL',
                     accelerator: 'Ctrl+L',
-                    click: clipboard.writeText(win.window.webContents.getURL())
+                    click: clipboard.writeText(win.webContents.getURL())
                 }, {
                     label: 'Paste',
                     accelerator: 'Ctrl+V',
@@ -239,21 +226,21 @@
                 submenu: [{
                     label: 'Go Back',
                     accelerator: 'Ctrl+[',
-                    click: win.window.webContents.goBack()
+                    click: win.webContents.goBack()
                 }, {
                     label: 'Go Forward',
                     accelerator: 'Ctrl+]',
-                    click: win.window.webContents.goForward()
+                    click: win.webContents.goForward()
                 }, {
                     label: 'Reload page',
                     accelerator: 'Ctrl+R',
-                    click: win.window.reload()
+                    click: win.reload()
                 }, {
                     type: 'separator'
                 }, {
                     label: 'Toggle Full Screen',
                     accelerator: 'F11',
-                    click: win.window.setFullScreen(!win.window.isFullScreen())
+                    click: win.setFullScreen(win.isFullScreen())
                 }]
             }, {
                 label: 'Window',
@@ -272,7 +259,7 @@
                 label: 'Help',
                 submenu: [{
                     label: `About`,
-                    click: showAboutAppWindow()
+                    click: AboutApp.showWindow
                 }]
 
             }
@@ -285,132 +272,107 @@
 
 
     function resetAppData() {
-        dialog.showMessageBox(win.window, {
-            type: 'warning',
-            buttons: ['Yes', 'Cancel'],
-            defaultId: 2,
-            title: 'Confirmation',
-            message: 'This action will reset Todoist configuration by clearing its data (Cache, Cookies, Session data). Doing this may fix any issues but will also Sign you out from Todoist and a Sign In will be required next time you open Todoist. Are you sure you want to proceed?'
-        }, function(response) {
+        try{
 
-            if (response === 0) {
-                var session = win.window.webContents.session;
-
-                session.clearStorageData(function() {
-                    session.clearCache(function() {
-                        win.window.loadURL(mainUrl);
+            dialog.showMessageBox(win, {
+                type: 'warning',
+                buttons: ['Yes', 'Cancel'],
+                defaultId: 2,
+                title: 'Confirmation',
+                message: 'This action will reset the current app data and will require you to sign in again the next time you open Todoist. Doing this may help fix certain issues (if any) but isn\'t recommended otherwise. Do you want to proceed?'
+            }, function(response) {
+    
+                if (response === 0) {
+                    var session = win.webContents.session;
+    
+                    session.clearStorageData(function() {
+                        session.clearCache(function() {
+                            app.isQuiting = true;
+                            app.quit();
+                        });
                     });
-                });
-            }
+                }
+    
+            });
 
-        });
+
+        }
+        catch(e){
+            console.log(e);
+        }
+      
     }
 
+    function initializeApp(){
 
-
-
+        createAppWindow();
+        let config = new prefs(win);
+        config.loadAppSettings();
+    }
 
     function main() {
-        app.on('ready', createAppWindow);
-        loadAppSettings();
+        app.on('ready', initializeApp);
         app.commandLine.appendSwitch('high-dpi-support', 1);
         app.commandLine.appendSwitch('force-device-scale-factor', 1);
+       
     }
 
+    global.AboutApp = {
 
-    function showAboutAppWindow() {
+        showWindow(){
 
-        if (aboutWindow) {
+            if (aboutWindow){
+                aboutWindow.show();
+                aboutWindow.focus();
+            }
+            else
+            {
+                AboutApp.createNewAboutWindow();
+            }
+        },
 
-            aboutWindow.window.show();
-            aboutWindow.window.focus();
-        } else {
-
+        createNewAboutWindow(){
+            
             aboutWindow = new BrowserWindow({
-                width: 558,
-                height: 648,
+                width: 560,
+                height: 650,
                 resizable: false,
                 center: true,
-                frame: true,
                 icon: path.join(__dirname, 'icons/icon_tray.png'),
                 webPreferences: {
                     nodeIntegration: true,
                 }
-
+    
             });
-
+    
             aboutWindow.loadURL(url.format({
-                pathname: path.join(__dirname, 'extras/about.html'),
+                pathname: path.join(__dirname, 'extras/AboutApp.html'),
                 protocol: 'file:',
                 slashes: true
             }));
-
-            aboutWindow.window.webContents.on("new-window", (e, url) => {
+    
+            aboutWindow.webContents.on("new-window", (e, url) => {
                 shell.openExternal(url);
                 e.preventDefault();
             });
-
-            aboutWindow.window.on("close", () => {
-                aboutWindow = null;
+    
+            aboutWindow.on("close", () => {
+                aboutWindow = undefined;
             });
-
-
+    
+    
+            aboutWindow.show();
+            aboutWindow.setMenu(null);
+            aboutWindow.setMenuBarVisibility(false);
         }
-
-        aboutWindow.window.show();
-        aboutWindow.setMenu(null);
-        aboutWindow.setMenuBarVisibility(false);
-
-    }
+      
+    };
 
 
-    function showOptionsWindow() {
 
-        if (optionsWindow) {
-
-            optionsWindow.window.show();
-            optionsWindow.window.focus();
-        } else {
-
-            optionsWindow = new BrowserWindow({
-                width: 489,
-                height: 450,
-                resizable: false,
-                center: true,
-                frame: true,
-                icon: path.join(__dirname, 'icons/icon_tray.png'),
-                webPreferences: {
-                    nodeIntegration: true,
-                }
-
-            });
-
-            optionsWindow.loadURL(url.format({
-                pathname: path.join(__dirname, 'extras/UserSettings.html'),
-                protocol: 'file:',
-                slashes: true
-            }));
-
-            optionsWindow.window.webContents.on("new-window", (e, url) => {
-                shell.openExternal(url);
-                e.preventDefault();
-            });
-
-            optionsWindow.window.on("close", () => {
-                optionsWindow = null;
-            });
-
-
-        }
-
-        optionsWindow.window.show();
-        optionsWindow.setMenu(null);
-        optionsWindow.setMenuBarVisibility(false);
-
-    }
-
+   
     function registerGlobalKeyboardShortcuts() {
-        shortcutsInstance = new shortcuts(app);
+        shortcutsInstance = new shortcuts(win);
         shortcutsInstance.registerAllShortcuts();
 
     }
@@ -422,137 +384,6 @@
         }
 
     }
-
-
-
-    global.config = {
-
-        settingsFile: path.join(app.getPath('userData'), "/settings.json"),
-        startupScript: new AutoLaunch({ name: app.getName() }),
-
-        configKeys: {
-            optionId_enableTrayIcon: "enableTrayIcon",
-            optionId_autoStartOnLogon: "autoStartOnLogon",
-            optionId_startMinimized: "startMinimized",
-            optionId_hideMainMenuBar: "hideMainMenuBar",
-            optionId_enableGlobalKeyboardShortcuts: "enableGlobalKeyboardShortcuts",
-            optionId_disableGPUAcceleration: "disableGPUAcceleration",
-        },
-
-        defaultSettings: {
-            optionId_enableTrayIcon: true,
-            optionId_autoStartOnLogon: false,
-            optionId_startMinimized: false,
-            optionId_hideMainMenuBar: true,
-            optionId_enableGlobalKeyboardShortcuts: true,
-            optionId_disableGPUAcceleration: false
-
-        },
-
-
-        addSelfToSystemStartup() {
-
-            startupScript.isEnabled().then(function(enabled) {
-                if (!enabled) {
-                    startupScript.enable();
-                }
-            });
-
-        },
-
-        removeSelfFromStartup() {
-
-            startupScript.isEnabled().then(function(enabled) {
-                if (enabled) {
-                    startupScript.disable();
-
-                }
-            });
-
-        },
-
-        currentSettings: {},
-
-
-
-        loadAppSettings() {
-
-            try {
-                var data = fileSystem.readFileSync(settingsFile);
-
-                if (data != "" && data != "{}" && data != "[]") {
-                    currentSettings = JSON.parse(data);
-
-                } else {
-                    console.log("Couldn't find valid configuration, loading defaults.");
-                    currentSettings = defaultSettings;
-
-                }
-            } catch (e) {
-                currentSettings = defaultSettings;
-
-            }
-
-
-            if (!config.get(configKeys.optionId_startMinimized)) {
-                app.window.show();
-
-            }
-
-            if (config.get(configKeys.optionId_disableGPUAcceleration)) {
-
-                app.disableHardwareAcceleration();
-            }
-
-
-            if (config.get(configKeys.optionId_enableTrayIcon) != false && app.tray === undefined) {
-                createTrayIcon();
-            }
-
-            if (config.get(configKeys.optionId_autoStartOnLogon)) {
-                addSelfToSystemStartup();
-
-            } else {
-                removeSelfFromStartup();
-
-            }
-
-            if (config.get(configKeys.optionId_enableGlobalKeyboardShortcuts)) {
-
-                registerGlobalKeyboardShortcuts();
-            }
-
-            app.window.setMenuBarVisibility(config.get(configKeys.optionId_hideMainMenuBar) != true);
-            app.window.setAutoHideMenuBar(config.get(configKeys.optionId_hideMainMenuBar));
-        },
-
-        resetToDefaults() {
-
-            currentSettings = defaultSettings;
-            saveSettingsToDisk();
-            loadAppConfig();
-        },
-
-        saveSettingsToDisk() {
-
-            var user_options = JSON.stringify(config.currentSettings);
-            fileSystem.writeFileSync(settingsFile, user_options);
-
-        },
-
-        get(key) {
-            return config.currentSettings[key];
-        },
-
-        set(key, value) {
-            config.currentSettings[key] = value;
-        }
-
-
-    };
-
-
-
 
 
     main();

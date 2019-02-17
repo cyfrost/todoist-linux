@@ -4,35 +4,33 @@
 <head>
     <meta charset="utf-8">
     <script type="text/javascript">
-        window.jQuery = window.$ = require('./jquery.js');
-        window.Hammer = require('./hammer.js');
+        window.jQuery = window.$ = require('./jquery.min.js');
+        window.Hammer = require('./hammer.min.js');
         window.app = require('electron').remote;
     </script>
-    <link rel="stylesheet" href="./materialize.css">
-    <link rel="stylesheet" href="./styles.css">
-    <script src="./materialize.js"></script>
-    <script src="./AboutApp.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.js" type="text/javascript"></script>
+    <script src="./AboutApp.js" type="text/javascript"></script>
     <title>About Todoist for Linux</title>
 </head>
 
 <body>
     <br>
     <center>
-        <img src="../icons/icon_tray.png" alt="Todoist" style="width:90px;height:90px;">
-        <img src="../icons/mascot.png" alt="Linux" style="width:90px;height:95px;">
+        <img src="../icons/icon_tray.png" alt="Todoist" style="width:88px;height:90px;">
+        <img src="../icons/mascot.png" alt="Linux" style="width:80px;height:95px;">
     </center>
     <main class="main-container">
-        <header>
-            <h5 class="teal-text text-lighten-0">About Todoist for Linux (v<span id="appversion"></span>)</h5>
-        </header>
+        <h5 class="teal-text text-lighten-0"  style="padding-bottom: 10px; border-bottom:  0.5px solid #D3D3D3; border-width: thin;">About Todoist for Linux (v<span id="app_version_header"></span>)</h5>
         <div>
-            <p>Todoist is a To-do app used by many people. This app is an open-source implementation of the <a href='https://en.todoist.com/app?lang=en'>Todoist Web App</a> to create a Linux native package.</p>
+            <p>Todoist is a To-do app used by many people. This app is an open-source implementation of the official Todoist Web App</a> to create a Linux native package.</p>
             <p>Disclaimer: This app is community made and not an official product.</p>
-            <p>Original Author: Ruslan Bekenev (<a href='https://github.com/krydos' target="_blank">https://github.com/krydos</a>)<br>Current Maintainer: Cyrus Frost (<a href='https://github.com/cyfrost' target="_blank">https://github.com/cyfrost</a>)<br>GitHub
-                Repository:
-                <a href='https://github.com/cyfrost/todoist-linux' target="_blank">https://github.com/cyfrost/todoist-linux</a><br>Get App Updates: <a href="https://github.com/cyfrost/todoist-linux/releases" target="_blank">https://github.com/cyfrost/todoist-linux/releases</a>
-            </p>
-            <br><b><u>Debug Info:</u></b><br> App version: v<span id="app_version"></span><br> Electron Runtime: v<span id="electron_version"></span><br> Node Runtime: v<span id="node_version"></span><br> Chromium Engine: v<span id="chromium_version"></span><br>
+            <p><p class="teal-text text-lighten-0" style="font-size: 18px; font-weight: 400; padding-top: 5px; padding-bottom: 5px; border-bottom:  0.3px solid #D3D3D3; border-width: thin;">Credits</p><p>Original Author: Ruslan Bekenev (<a href='https://github.com/krydos' target="_blank">https://github.com/krydos</a>)<br>Current Maintainer: Cyrus Frost (<a href='https://github.com/cyfrost' target="_blank">https://github.com/cyfrost</a>)<br>GitHub
+                Repository: visit (
+                <a href='https://github.com/cyfrost/todoist-linux' target="_blank">https://github.com/cyfrost/todoist-linux</a>)<br>Get App Updates: visit (<a href="https://github.com/cyfrost/todoist-linux/releases" target="_blank">https://github.com/cyfrost/todoist-linux/releases</a>)</p>
+            
+            <p class="teal-text text-lighten-0" style="font-size: 18px; font-weight: 400; padding-top: 5px; padding-bottom: 5px; border-bottom:  0.3px solid #D3D3D3; border-width: thin;">Debug Info</p><p>App version: v<span id="app_version"></span><br> Electron Runtime: v<span id="electron_version"></span><br> Node Runtime: v<span id="node_version"></span><br> Chromium Engine: v<span id="chromium_version"></span></p>
         </div>
     </main>
 </body>

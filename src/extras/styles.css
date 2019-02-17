@@ -23,6 +23,11 @@ main {
     right: 0;
 }
 
+label, p{
+    color: #707070;
+}
+
+
 label:after {
     width: 200px
 }
