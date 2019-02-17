@@ -1,9 +1,8 @@
-const CONFIG_FILE_NAME = '.todoist-linux.json'
-
-const {dialog} = require('electron')
+const CONFIG_FILE_NAME = '.todoist-linux.json';
+const dialog = require('electron');
 const fs = require('fs');
 const path = require('path');
-const { URL } = require('url');
+const URL = require('url');
 
 class ShortcutConfig {
     constructor() {
@@ -64,9 +63,6 @@ class ShortcutConfig {
     }
 
     getConfigDirectory() {
-        if (process.platform == 'win32') {
-            return process.env.HOMEDRIVE + process.env.HOMEPATH;
-        }
 
         // if possible save config in $XDG_CONFIG_HOME
         // which is $HOME/.config by default
@@ -94,6 +90,4 @@ class ShortcutConfig {
     }
 }
 
-module.exports = {
-    ShortcutConfig
-};
+module.exports = ShortcutConfig;

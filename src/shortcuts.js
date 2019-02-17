@@ -1,5 +1,5 @@
-const { globalShortcut } = require('electron');
-const {ShortcutConfig} = require('./shortcutConfig');
+const globalShortcut = require('electron');
+const ShortcutConfig = require('./shortcutConfig');
 
 class shortcuts {
     constructor(win) {
@@ -11,6 +11,10 @@ class shortcuts {
         this.registerQuickAddShortcut();
         this.registerShowHideShortcut();
         this.registerReloadShortcut();
+    }
+
+    unregisterAllShortcuts() {
+        globalShortcut.unregisterAll();
     }
 
     // open quick add popup
