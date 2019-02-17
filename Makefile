@@ -1,17 +1,17 @@
 DIST_DIR=dist
-VERSION=1.0.0
+VERSION=1.1.0
+
+.PHONY: env
+build:
+	npm install && cd src && npm install
+
+.PHONY: build
+packages:
+	./node_modules/.bin/electron-builder --linux --ia32 --x64
 
 .PHONY: run
 run:
 	cd src && npm run start
-
-.PHONY: packages
-packages:
-	./node_modules/.bin/electron-builder --linux --ia32 --x64
-
-.PHONY: build
-build:
-	npm install && cd src && npm install && npm run start
 
 
 .PHONY: archive
@@ -21,3 +21,7 @@ archive:
 .PHONY: set-version
 set-version:
 	cd src && npm version $(VERSION)
+
+.PHONY: list
+list:
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'

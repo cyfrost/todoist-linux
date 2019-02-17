@@ -4,14 +4,14 @@
     const url = require('url');
     const AutoLaunch = require("auto-launch");
     const fileSystem = require('fs');
-    const mainUrl = 'https://todoist.com/app';
     const shortcuts = require('./shortcuts');
 
     let win = {};
     let tray = null;
+    let gOauthWindow = undefined;
     let config = {};
     let shortcutsInstance = {};
-
+    const mainUrl = 'https://todoist.com/app';
 
 
 
@@ -21,7 +21,7 @@
 
     function handlePageRedirect(e, url) {
         // there may be some popups on the same page
-        if (url == win.webContents.getURL()) {
+        if (url == app.webContents.getURL()) {
             return true;
         }
 
@@ -32,6 +32,24 @@
             win.reload();
             return true;
         }
+
+        /**
+         * In case of google's oauth login
+         * let's create another window and listen for
+         * its "close" event.
+         * As soon as that event fired we can refresh our
+         * main window.
+         */
+        if (/google.+?oauth/.test(url)) {
+            e.preventDefault();
+            gOauthWindow = new BrowserWindow();
+            gOauthWindow.loadURL(url);
+            gOauthWindow.on('close', () => {
+                win.reload();
+            });
+            return true;
+        }
+
 
         e.preventDefault();
         shell.openExternal(url);
@@ -44,63 +62,40 @@
         tray = new Tray(path.join(__dirname, 'icons/icon_tray.png'));
 
         win.trayContextMenu = Menu.buildFromTemplate([{
-                label: 'Show',
-                click: function() {
-                    win.window.show();
-                    win.window.focus();
-                }
+                label: 'Open',
+                click: bringAppToFocus()
             },
             {
                 type: 'separator'
             },
             {
-                label: 'Reset app',
-                click: function() {
-                    win.clearAppData();
-                    config.currentSettings = config.defaultSettings;
-                    config.saveConfiguration();
-                    if (settings.window) {
-                        settings.window.close();
-                    }
-                    if (about.window) {
-                        about.window.close();
-                    }
-                    win.window.reload();
-                    win.window.show();
-                    win.window.focus();
-                }
-            },
-            {
                 label: 'Options',
-                click: function() {
-
-                    settings.init();
-                }
+                click: showOptionsWindow()
             }, {
                 type: 'separator'
             }, {
                 label: 'About',
-                click: function() {
-                    showAboutAppWindow();
-                }
+                click: showAboutAppWindow()
             },
             {
                 label: 'Quit',
-                click: function() {
+                click: () => {
                     app.isQuiting = true;
                     app.quit();
                 }
             }
         ]);
 
-        tray.on('click', () => {
-            win.window.show();
-            win.window.focus();
-        });
+        tray.on('click', bringAppToFocus);
 
         tray.setToolTip('Todoist');
         tray.setContextMenu(trayContextMenu);
 
+    }
+
+    function bringAppToFocus(win) {
+        win.window.show();
+        win.window.focus();
     }
 
 
@@ -124,14 +119,14 @@
             icon: path.join(__dirname, 'icons/icon_tray.png')
         });
 
-        win.setMenu(null);
-
         // and load the index.html of the app.
         win.loadURL(url.format({
             pathname: path.join(__dirname, 'index.html'),
             protocol: 'file:',
             slashes: true
         }));
+
+        createMainMenu();
 
 
 
@@ -177,16 +172,12 @@
                 submenu: [{
                         label: 'Options',
                         accelerator: 'Ctrl+S',
-                        click: function() {
-                            settings.init();
-                        }
+                        click: showOptionsWindow()
 
                     },
                     {
                         label: 'Reset App Data',
-                        click: function click() {
-                            resetAppData();
-                        }
+                        click: resetAppData()
                     },
                     {
                         type: 'separator'
@@ -195,7 +186,7 @@
                     {
                         label: 'Quit',
                         accelerator: 'Ctrl+Q',
-                        click: function() {
+                        click: () => {
                             app.isQuiting = true;
                             app.quit();
                         }
@@ -227,9 +218,7 @@
                 }, {
                     label: 'Copy Current URL',
                     accelerator: 'Ctrl+L',
-                    click: function click() {
-                        clipboard.writeText(win.window.webContents.getURL());
-                    }
+                    click: clipboard.writeText(win.window.webContents.getURL())
                 }, {
                     label: 'Paste',
                     accelerator: 'Ctrl+V',
@@ -250,29 +239,21 @@
                 submenu: [{
                     label: 'Go Back',
                     accelerator: 'Ctrl+[',
-                    click: function click() {
-                        win.window.webContents.goBack();
-                    }
+                    click: win.window.webContents.goBack()
                 }, {
                     label: 'Go Forward',
                     accelerator: 'Ctrl+]',
-                    click: function click() {
-                        win.window.webContents.goForward();
-                    }
+                    click: win.window.webContents.goForward()
                 }, {
                     label: 'Reload page',
                     accelerator: 'Ctrl+R',
-                    click: function click(item) {
-                        win.window.reload();
-                    }
+                    click: win.window.reload()
                 }, {
                     type: 'separator'
                 }, {
                     label: 'Toggle Full Screen',
                     accelerator: 'F11',
-                    click: function click() {
-                        win.window.setFullScreen(!win.window.isFullScreen());
-                    }
+                    click: win.window.setFullScreen(!win.window.isFullScreen())
                 }]
             }, {
                 label: 'Window',
@@ -291,10 +272,7 @@
                 label: 'Help',
                 submenu: [{
                     label: `About`,
-                    click: function click() {
-                        showAboutAppWindow();
-                    }
-
+                    click: showAboutAppWindow()
                 }]
 
             }
@@ -334,9 +312,7 @@
 
     function main() {
         app.on('ready', createAppWindow);
-        createMainMenu();
         loadAppSettings();
-
         app.commandLine.appendSwitch('high-dpi-support', 1);
         app.commandLine.appendSwitch('force-device-scale-factor', 1);
     }
@@ -546,14 +522,8 @@
                 registerGlobalKeyboardShortcuts();
             }
 
-
-
             app.window.setMenuBarVisibility(config.get(configKeys.optionId_hideMainMenuBar) != true);
             app.window.setAutoHideMenuBar(config.get(configKeys.optionId_hideMainMenuBar));
-
-
-
-
         },
 
         resetToDefaults() {
