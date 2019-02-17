@@ -13,6 +13,10 @@ build:
 run:
 	cd src && npm run start
 
+.PHONY: clean
+clean:
+	rm -rf $(DIST_DIR)
+
 
 .PHONY: archive
 archive:
