@@ -2,11 +2,11 @@ DIST_DIR=dist
 VERSION=1.1.0
 
 .PHONY: env
-build:
+env:
 	npm install && cd src && npm install
 
 .PHONY: build
-packages:
+build:
 	./node_modules/.bin/electron-builder --linux --ia32 --x64
 
 .PHONY: run
