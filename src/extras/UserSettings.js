@@ -31,15 +31,6 @@ var SettingsView = {
             e.preventDefault();
 
             config.resetToDefaults();
-
-            $(optionId_disableGPUAcceleration).attr("checked", config.defaultSettings.optionId_disableGPUAcceleration);
-            $(optionId_hideMainMenuBar).attr("checked", config.defaultSettings.optionId_hideMainMenuBar);
-            $(optionId_enableGlobalKeyboardShortcuts).attr("checked", config.defaultSettings.optionId_enableGlobalKeyboardShortcuts);
-            $(optionId_autoStartOnLogon).attr("checked", config.defaultSettings.optionId_autoStartOnLogon);
-            $(optionId_startMinimized).attr("checked", config.defaultSettings.optionId_startMinimized);
-            $(optionId_enableTrayIcon).attr("checked", config.defaultSettings.optionId_enableTrayIcon);
-
-            alert("Settings restored to defaults successfully!");
         });
 
         $(saveAndCloseBtnId).on("click", (e) => {
@@ -48,20 +39,23 @@ var SettingsView = {
                 return;
             }
 
-            saveSettings();
-            closeWindow();
+            SettingsView.saveSettings();
+            SettingsView.closeWindow();
 
         });
     },
 
     loadSettings() {
 
-        $(optionId_disableGPUAcceleration).attr("checked", config.get(optionId_disableGPUAcceleration));
-        $(optionId_hideMainMenuBar).attr("checked", config.get(optionId_hideMainMenuBar));
-        $(optionId_enableGlobalKeyboardShortcuts).attr("checked", config.get(optionId_enableGlobalKeyboardShortcuts));
-        $(optionId_autoStartOnLogon).attr("checked", config.get(optionId_autoStartOnLogon));
-        $(optionId_startMinimized).attr("checked", config.get(optionId_startMinimized));
-        $(optionId_enableTrayIcon).attr("checked", config.get(optionId_enableTrayIcon));
+        alert(config.get("enableTrayIcon"));
+        
+        
+        $('#' + optionId_disableGPUAcceleration).attr("checked",  config.get("\'" + optionId_disableGPUAcceleration + "\'") );
+        $('#' + optionId_hideMainMenuBar).attr("checked", config.get("\'" + optionId_hideMainMenuBar + "\'"));
+        $('#' + optionId_enableGlobalKeyboardShortcuts).attr("checked", config.get("\'" + optionId_enableGlobalKeyboardShortcuts + "\'"));
+        $('#' + optionId_autoStartOnLogon).attr("checked",config.get("\'" + optionId_autoStartOnLogon + "\'"));
+        $('#' + optionId_startMinimized).attr("checked",config.get("\'" +optionId_startMinimized + "\'"));
+        $('#' + optionId_enableTrayIcon).attr("checked", config.get("\'" +optionId_enableTrayIcon + "\'"));
 
         SettingsView.bindToDOMEvents();
     },
@@ -76,10 +70,10 @@ var SettingsView = {
         config.set(optionId_enableTrayIcon, $(optionId_enableTrayIcon).is(":checked"));
 
         config.saveSettingsToDisk();
-        config.applySettings();
+        config.loadAppSettings();
     },
 
     closeWindow() {
-        appSettingsView.close();
+        appSettingsView.closeWindow();
     }
 };

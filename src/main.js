@@ -1,19 +1,27 @@
-    const { app, BrowserWindow, Tray, Menu, globalShortcut, dialog, clipboard, shell } = require('electron');
+    const { app, BrowserWindow, Tray, Menu, dialog, clipboard, shell } = require('electron');
+    const AutoLaunch = require("auto-launch");
+    const fileSystem = require('fs');
     const windowStateKeeper = require('electron-window-state');
     const path = require('path');
     const url = require('url');
+    
+
 
     const shortcuts = require('./shortcuts');
-    const prefs = require('./AppPreferences');
     
 
     let win = undefined;
     let tray = undefined;
     let aboutWindow = undefined;
+    let optionsWindow = undefined;
     let gOauthWindow = undefined;
     let shortcutsInstance = undefined;
    
     const mainUrl = 'https://todoist.com/app';
+
+
+
+   
 
     function handlePageRedirect(e, url) {
         // there may be some popups on the same page
@@ -66,7 +74,7 @@
             },
             {
                 label: 'Options',
-                click: prefs.showAppSettings
+                click: settings.showAppSettings
             }, {
                 type: 'separator'
             }, {
@@ -129,6 +137,7 @@
                 event.preventDefault();
                 win.hide();
             }
+            tray = undefined;
 
             unregisterGlobalKeyboardShortcuts();
 
@@ -159,7 +168,7 @@
                 submenu: [{
                         label: 'Options',
                         accelerator: 'Ctrl+S',
-                        click: prefs.showAppSettings
+                        click: settings.showAppSettings
 
                     },
                     {
@@ -279,14 +288,19 @@
                 buttons: ['Yes', 'Cancel'],
                 defaultId: 2,
                 title: 'Confirmation',
-                message: 'This action will reset the current app data and will require you to sign in again the next time you open Todoist. Doing this may help fix certain issues (if any) but isn\'t recommended otherwise. Do you want to proceed?'
+                message: 'This action will reset the current app data and will require you to sign in again the next time you open Todoist. Doing this may help fix certain issues (if any) but isn\'t recommended otherwise.\n\nThe app will quit and must be re-opened manually. Would you like to proceed?'
             }, function(response) {
     
                 if (response === 0) {
+                 
                     var session = win.webContents.session;
     
                     session.clearStorageData(function() {
                         session.clearCache(function() {
+
+                         config.currentSettings = config.defaultSettings;
+                         config.saveSettingsToDisk();
+
                             app.isQuiting = true;
                             app.quit();
                         });
@@ -306,7 +320,6 @@
     function initializeApp(){
 
         createAppWindow();
-        let config = new prefs(win);
         config.loadAppSettings();
     }
 
@@ -368,6 +381,65 @@
       
     };
 
+    global.settings = {
+
+        showAppSettings(){
+    
+            if (optionsWindow){
+                optionsWindow.show();
+                optionsWindow.focus();
+            }
+            else
+            {
+                settings.createNewSettingsWindow();
+            }
+        },
+    
+        createNewSettingsWindow(){
+    
+            optionsWindow = new BrowserWindow({
+                //width: 550,
+                width: 1600,
+                height: 450,
+                resizable: true,
+                center: true,
+                frame: true,
+                icon: path.join(__dirname, 'icons/icon_tray.png'),
+                webPreferences: {
+                    nodeIntegration: true,
+                }
+    
+            });
+    
+            optionsWindow.loadURL(url.format({
+                pathname: path.join(__dirname, 'extras/UserSettings.html'),
+                protocol: 'file:',
+                slashes: true
+            }));
+    
+            optionsWindow.webContents.on("new-window", (e, url) => {
+                shell.openExternal(url);
+                e.preventDefault();
+            });
+    
+            optionsWindow.on("close", () => {
+                optionsWindow = undefined;
+            });
+    
+            optionsWindow.show();
+            optionsWindow.setMenu(null);
+            optionsWindow.setMenuBarVisibility(false);
+            optionsWindow.webContents.openDevTools();
+        },
+
+        closeWindow(){
+          if (optionsWindow){
+            optionsWindow.close();
+          }  
+        }
+      
+    };
+
 
 
    
@@ -384,6 +456,175 @@
         }
 
     }
+
+    function msg(str){
+
+        dialog.showMessageBox(win, {
+            type: 'info',
+            message:str
+        });
+    }
+
+
+    global.config = {
+
+        settingsFile: path.join(app.getPath('userData'), "/settings.json"),
+        
+        startupScript: new AutoLaunch({ name: app.getName() }),	
+
+        optionId_enableTrayIcon: "enableTrayIcon",	
+        optionId_autoStartOnLogon: "autoStartOnLogon",	
+        optionId_startMinimized: "startMinimized",	
+        optionId_hideMainMenuBar: "hideMainMenuBar",	
+        optionId_enableGlobalKeyboardShortcuts: "enableGlobalKeyboardShortcuts",	
+        optionId_disableGPUAcceleration: "disableGPUAcceleration",
+
+        defaultSettings: {	
+            enableTrayIcon: true,	
+            autoStartOnLogon: true,	
+            startMinimized: true,	
+            hideMainMenuBar: false,	
+            enableGlobalKeyboardShortcuts: true,	
+            disableGPUAcceleration: false	
+         },
+
+        currentSettings: {},
+
+
+        addSelfToSystemStartup() {
+
+            startupScript = new AutoLaunch({ name: app.getName() });
+    
+            startupScript.isEnabled().then(function(enabled) {
+                if (!enabled) {
+                    startupScript.enable();
+                }
+            });
+    
+        },
+    
+        removeSelfFromStartup() {
+    
+            startupScript = new AutoLaunch({ name: app.getName() });
+    
+            startupScript.isEnabled().then(function(enabled) {
+                if (enabled) {
+                    startupScript.disable();
+    
+                }
+            });
+    
+        },
+    
+        loadAppSettings() {
+    
+            try {
+                var data = fileSystem.readFileSync(config.settingsFile);
+    
+                if (data != "" && data != "{}" && data != "[]") {
+                    msg(config.settingsFile);
+                    currentSettings = JSON.parse(data);
+                    msg("settings loaded \n\n", currentSettings);
+    
+                } else {
+                    config.currentSettings = config.defaultSettings;
+                    config.saveSettingsToDisk();
+                    msg("defaults     loaded");
+                   }
+                   
+                
+            } catch (e) {
+                config.currentSettings = config.defaultSettings;
+                config.saveSettingsToDisk();
+                msg("defaults     loaded");
+            }
+    
+         
+            if (!config.get(config.optionId_startMinimized)) {
+                win.show();
+    
+            }
+    
+            if (config.get(config.optionId_disableGPUAcceleration)) {
+    
+                app.disableHardwareAcceleration();
+            }
+    
+    
+            if (config.get(config.optionId_enableTrayIcon) != false && app.tray === undefined) {
+                createTrayIcon();
+            }
+    
+            if (config.get(config.optionId_autoStartOnLogon)) {
+                config.addSelfToSystemStartup();
+    
+            } else {
+                config.removeSelfFromStartup();
+    
+            }
+    
+            if (config.get(config.optionId_enableGlobalKeyboardShortcuts)) {
+    
+                registerGlobalKeyboardShortcuts();
+            }
+    
+            win.setMenuBarVisibility(config.get(config.optionId_hideMainMenuBar) != true);
+   
+        },
+    
+        resetToDefaults() {
+
+            try{
+
+                dialog.showMessageBox(win, {
+                    type: 'warning',
+                    buttons: ['Yes', 'Cancel'],
+                    defaultId: 2,
+                    title: 'Confirmation',
+                    message: 'Are you sure you want to reset app settings to defaults?\n\nThe app will quit and must be re-opened manually for the changes to occur.'
+                }, function(response) {
+        
+                    if (response === 0) {
+
+                        config.currentSettings = config.defaultSettings;
+                        config.saveSettingsToDisk();
+                        app.isQuiting = true;
+                        app.quit();
+                    }
+                    else{
+                        if (optionsWindow){optionsWindow.focus();}
+                    }
+        
+                });
+    
+    
+            }
+            catch(e){
+                console.log(e);
+            }
+    
+            
+            //config.loadAppSettings();
+        },
+    
+        saveSettingsToDisk() {
+    
+            var user_options = JSON.stringify(config.currentSettings);
+            fileSystem.writeFileSync(config.settingsFile, user_options);
+    
+        },
+    
+        get(key) {
+
+           return config.currentSettings[key];
+        },
+    
+        set(key, value) {
+            config.currentSettings[key] = value;
+        },
+
+    };	
+
 
 
     main();
