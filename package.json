@@ -1,10 +1,13 @@
 {
-    "name": "Todoist",
+    "name": "todoist",
     "main": "src/main.js",
     "description": "Todoist for linux",
     "author": "Ruslan Bekenev <furyinbox@gmail.com>",
     "maintainer": "Cyrus Frost <cyrus.frost@hotmail.com>",
-    "contributors": ["Cyrus Frost <cyrus.frost@hotmail.com>", "Ruslan Bekenev <furyinbox@gmail.com>"],
+    "contributors": [
+        "Cyrus Frost <cyrus.frost@hotmail.com>",
+        "Ruslan Bekenev <furyinbox@gmail.com>"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/cyfrost/todoist-linux.git"
@@ -19,8 +22,7 @@
                 "deb",
                 "rpm",
                 "AppImage",
-                "tar.gz",
-                "snap"
+                "tar.gz"
             ],
             "category": "Office;Utility;"
         }

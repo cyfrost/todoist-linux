@@ -10,12 +10,12 @@
     const shortcuts = require('./shortcuts');
     
 
-    let win = undefined;
-    let tray = undefined;
-    let aboutWindow = undefined;
-    let optionsWindow = undefined;
-    let gOauthWindow = undefined;
-    let shortcutsInstance = undefined;
+    let win;
+    let tray;
+    let aboutWindow;
+    let optionsWindow;
+    let gOauthWindow;
+    let shortcutsInstance;
    
     const mainUrl = 'https://todoist.com/app';
 
@@ -519,28 +519,29 @@
         loadAppSettings() {
     
             try {
+
                 var data = fileSystem.readFileSync(config.settingsFile);
     
                 if (data != "" && data != "{}" && data != "[]") {
-                    msg(config.settingsFile);
+                    //msg(config.settingsFile);
                     currentSettings = JSON.parse(data);
-                    msg("settings loaded \n\n", currentSettings);
+                    //msg("settings loaded \n\n", currentSettings);
     
                 } else {
                     config.currentSettings = config.defaultSettings;
                     config.saveSettingsToDisk();
-                    msg("defaults     loaded");
+                    //msg("defaults     loaded");
                    }
                    
                 
             } catch (e) {
                 config.currentSettings = config.defaultSettings;
                 config.saveSettingsToDisk();
-                msg("defaults     loaded");
+                //msg("defaults     loaded");
             }
     
          
-            if (!config.get(config.optionId_startMinimized)) {
+            if (config.get(config.optionId_startMinimized)) {
                 win.show();
     
             }

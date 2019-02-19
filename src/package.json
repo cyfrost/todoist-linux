@@ -1,5 +1,5 @@
 {
-    "name": "Todoist",
+    "name": "todoist",
     "version": "1.1.0",
     "description": "Todoist for linux",
     "main": "main.js",
@@ -18,10 +18,10 @@
         "url": "https://github.com/cyfrost/todoist-linux.git"
     },
     "author": "Ruslan Bekenev <furyinbox@gmail.com>",
-    "email": "furyinbox@gmail.com",
-    "maintainer": "Cyrus Frost <cyrus.frost@hotmail.com",
+    "email": "cyrus.frost@hotmail.com",
+    "maintainer": "Cyrus Frost <cyrus.frost@hotmail.com>",
     "devDependencies": {
-        "electron": "^4.0.4",
+        "electron": "^4.0.5",
         "electron-packager": "^13.0.1"
     },
     "dependencies": {
