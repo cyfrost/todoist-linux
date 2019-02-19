@@ -126,6 +126,10 @@
             slashes: true
         }));
 
+        if (config.get("startMinimized") != true) {
+            win.show();
+        }
+
         // react on close and minimize
         win.on('minimize', function(event) {
             event.preventDefault();
@@ -167,7 +171,7 @@
                 label: 'File',
                 submenu: [{
                         label: 'Options',
-                        accelerator: 'Ctrl+S',
+                        accelerator: 'CommandOrControl+S',
                         click: settings.showAppSettings
 
                     },
@@ -181,7 +185,7 @@
 
                     {
                         label: 'Quit',
-                        accelerator: 'Ctrl+Q',
+                        accelerator: 'CommandOrControl+Q',
                         click: () => {
                             app.isQuiting = true;
                             app.quit();
@@ -195,37 +199,37 @@
                 label: 'Edit',
                 submenu: [{
                     label: 'Undo',
-                    accelerator: 'Ctrl+Z',
+                    accelerator: 'CommandOrControl+Z',
                     role: 'undo'
                 }, {
                     label: 'Redo',
-                    accelerator: 'Shift+Ctrl+Z',
+                    accelerator: 'CommandOrShift+Ctrl+Z',
                     role: 'redo'
                 }, {
                     type: 'separator'
                 }, {
                     label: 'Cut',
-                    accelerator: 'Ctrl+X',
+                    accelerator: 'CommandOrControl+X',
                     role: 'cut'
                 }, {
                     label: 'Copy',
-                    accelerator: 'Ctrl+C',
+                    accelerator: 'CommandOrControl+C',
                     role: 'copy'
                 }, {
                     label: 'Copy Current URL',
-                    accelerator: 'Ctrl+L',
+                    accelerator: 'CommandOrControl+L',
                     click: clipboard.writeText(win.webContents.getURL())
                 }, {
                     label: 'Paste',
-                    accelerator: 'Ctrl+V',
+                    accelerator: 'CommandOrControl+V',
                     role: 'paste'
                 }, {
                     label: 'Paste and Match Style',
-                    accelerator: 'Ctrl+Shift+V',
+                    accelerator: 'CommandOrControl+Shift+V',
                     role: 'pasteandmatchstyle'
                 }, {
                     label: 'Select All',
-                    accelerator: 'Ctrl+A',
+                    accelerator: 'CommandOrControl+A',
                     role: 'selectall'
                 }, {
                     type: 'separator'
@@ -234,15 +238,15 @@
                 label: 'View',
                 submenu: [{
                     label: 'Go Back',
-                    accelerator: 'Ctrl+[',
+                    accelerator: 'CommandOrControl+[',
                     click: win.webContents.goBack()
                 }, {
                     label: 'Go Forward',
-                    accelerator: 'Ctrl+]',
+                    accelerator: 'CommandOrControl+]',
                     click: win.webContents.goForward()
                 }, {
                     label: 'Reload page',
-                    accelerator: 'Ctrl+R',
+                    accelerator: 'CommandOrControl+R',
                     click: win.reload()
                 }, {
                     type: 'separator'
@@ -256,7 +260,7 @@
                 role: 'window',
                 submenu: [{
                     label: 'Minimize',
-                    accelerator: 'Ctrl+M',
+                    accelerator: 'CommandOrControl+M',
                     role: 'minimize'
                 }, {
                     label: 'Close',
@@ -439,9 +443,6 @@
         }
       
     };
-
-
-
    
     function registerGlobalKeyboardShortcuts() {
         shortcutsInstance = new shortcuts(win);
@@ -457,35 +458,19 @@
 
     }
 
-    function msg(str){
-
-        dialog.showMessageBox(win, {
-            type: 'info',
-            message:str
-        });
-    }
-
-
     global.config = {
 
         settingsFile: path.join(app.getPath('userData'), "/settings.json"),
         
         startupScript: new AutoLaunch({ name: app.getName() }),	
 
-        optionId_enableTrayIcon: "enableTrayIcon",	
-        optionId_autoStartOnLogon: "autoStartOnLogon",	
-        optionId_startMinimized: "startMinimized",	
-        optionId_hideMainMenuBar: "hideMainMenuBar",	
-        optionId_enableGlobalKeyboardShortcuts: "enableGlobalKeyboardShortcuts",	
-        optionId_disableGPUAcceleration: "disableGPUAcceleration",
-
         defaultSettings: {	
-            enableTrayIcon: true,	
-            autoStartOnLogon: true,	
-            startMinimized: true,	
-            hideMainMenuBar: false,	
-            enableGlobalKeyboardShortcuts: true,	
-            disableGPUAcceleration: false	
+            "enableTrayIcon": true,	
+            "autoStartOnLogon": false,	
+            "startMinimized": false,	
+            "hideMainMenuBar": true,	
+            "enableGlobalKeyboardShortcuts": true,	
+            "disableGPUAcceleration": false	
          },
 
         currentSettings: {},
@@ -540,23 +525,25 @@
                 //msg("defaults     loaded");
             }
     
+            
+
          
-            if (config.get(config.optionId_startMinimized)) {
-                win.show();
-    
-            }
-    
-            if (config.get(config.optionId_disableGPUAcceleration)) {
+            if (config.get("disableGPUAcceleration")) {
     
                 app.disableHardwareAcceleration();
             }
     
     
-            if (config.get(config.optionId_enableTrayIcon) != false && app.tray === undefined) {
+            if (config.get("enableTrayIcon") != false && tray === undefined) {
                 createTrayIcon();
             }
+            else if (config.get("enableTrayIcon") === false && tray != undefined) {
+
+            tray.destroy();
+            tray = undefined;
+             }
     
-            if (config.get(config.optionId_autoStartOnLogon)) {
+            if (config.get("autoStartOnLogon")) {
                 config.addSelfToSystemStartup();
     
             } else {
@@ -564,12 +551,12 @@
     
             }
     
-            if (config.get(config.optionId_enableGlobalKeyboardShortcuts)) {
+            if (config.get("enableGlobalKeyboardShortcuts")) {
     
                 registerGlobalKeyboardShortcuts();
             }
     
-            win.setMenuBarVisibility(config.get(config.optionId_hideMainMenuBar) != true);
+            win.setMenuBarVisibility(config.get("hideMainMenuBar") != true);
    
         },
     
@@ -623,6 +610,12 @@
         set(key, value) {
             config.currentSettings[key] = value;
         },
+
+        unSet(key) {
+            if (config.currentSettings.hasOwnProperty(key)) {
+                delete config.currentSettings[key];
+            }
+        }
 
     };	
 

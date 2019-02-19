@@ -47,27 +47,42 @@ var SettingsView = {
 
     loadSettings() {
 
-        alert(config.get("enableTrayIcon"));
+     
+
+        $("#disableGPUAcceleration").attr("checked", config.get("disableGPUAcceleration") == true);
+        $("#hideMainMenuBar").attr("checked", config.get("hideMainMenuBar") == true);
+        $("#enableGlobalKeyboardShortcuts").attr("checked", config.get("enableGlobalKeyboardShortcuts") == true);
+        $("#autoStartOnLogon").attr("checked", config.get("autoStartOnLogon") == true);
+        $("#startMinimized").attr("checked", config.get("startMinimized") == true);
+        $("#enableTrayIcon").attr("checked", config.get("enableTrayIcon") != false);
+
         
         
-        $('#' + optionId_disableGPUAcceleration).attr("checked",  config.get("\'" + optionId_disableGPUAcceleration + "\'") );
-        $('#' + optionId_hideMainMenuBar).attr("checked", config.get("\'" + optionId_hideMainMenuBar + "\'"));
-        $('#' + optionId_enableGlobalKeyboardShortcuts).attr("checked", config.get("\'" + optionId_enableGlobalKeyboardShortcuts + "\'"));
-        $('#' + optionId_autoStartOnLogon).attr("checked",config.get("\'" + optionId_autoStartOnLogon + "\'"));
-        $('#' + optionId_startMinimized).attr("checked",config.get("\'" +optionId_startMinimized + "\'"));
-        $('#' + optionId_enableTrayIcon).attr("checked", config.get("\'" +optionId_enableTrayIcon + "\'"));
+        // $('#' + optionId_disableGPUAcceleration).attr("checked",  config.get("\'" + optionId_disableGPUAcceleration + "\'") );
+        // $('#' + optionId_hideMainMenuBar).attr("checked", config.get("\'" + optionId_hideMainMenuBar + "\'"));
+        // $('#' + optionId_enableGlobalKeyboardShortcuts).attr("checked", config.get("\'" + optionId_enableGlobalKeyboardShortcuts + "\'"));
+        // $('#' + optionId_autoStartOnLogon).attr("checked",config.get("\'" + optionId_autoStartOnLogon + "\'"));
+        // $('#' + optionId_startMinimized).attr("checked",config.get("\'" +optionId_startMinimized + "\'"));
+        // $('#' + optionId_enableTrayIcon).attr("checked", config.get("\'" +optionId_enableTrayIcon + "\'"));
 
         SettingsView.bindToDOMEvents();
     },
 
     saveSettings() {
+        config.set("disableGPUAcceleration", $("#disableGPUAcceleration").is(":checked"));
+        config.set("hideMainMenuBar", $("#hideMainMenuBar").is(":checked"));
+        config.set("enableGlobalKeyboardShortcuts", $("#enableGlobalKeyboardShortcuts").is(":checked"));
+        config.set("autoStartOnLogon", $("#autoStartOnLogon").is(":checked"));
+        config.set("startMinimized", $("#startMinimized").is(":checked"));
+        config.set("enableTrayIcon", $("#enableTrayIcon").is(":checked"));
 
-        config.set(optionId_disableGPUAcceleration, $(optionId_disableGPUAcceleration).is(":checked"));
-        config.set(optionId_hideMainMenuBar, $(optionId_hideMainMenuBar).is(":checked"));
-        config.set(optionId_enableGlobalKeyboardShortcuts, $(optionId_enableGlobalKeyboardShortcuts).is(":checked"));
-        config.set(optionId_autoStartOnLogon, $(optionId_autoStartOnLogon).is(":checked"));
-        config.set(optionId_startMinimized, $(optionId_startMinimized).is(":checked"));
-        config.set(optionId_enableTrayIcon, $(optionId_enableTrayIcon).is(":checked"));
+
+        // config.set(optionId_disableGPUAcceleration, $(optionId_disableGPUAcceleration).is(":checked"));
+        // config.set(optionId_hideMainMenuBar, $(optionId_hideMainMenuBar).is(":checked"));
+        // config.set(optionId_enableGlobalKeyboardShortcuts, $(optionId_enableGlobalKeyboardShortcuts).is(":checked"));
+        // config.set(optionId_autoStartOnLogon, $(optionId_autoStartOnLogon).is(":checked"));
+        // config.set(optionId_startMinimized, $(optionId_startMinimized).is(":checked"));
+        // config.set(optionId_enableTrayIcon, $(optionId_enableTrayIcon).is(":checked"));
 
         config.saveSettingsToDisk();
         config.loadAppSettings();
